@@ -28,7 +28,7 @@ app.use(cors({
      "http://72.62.187.221:5173",
 
     // Active frontend domains
-    "https://v-web-five.vercel.app",
+    "https://medicwaycare.com/",
 
     // Other valid deployments you used
     "https://v-web-frontend-flame.vercel.app",
@@ -244,13 +244,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.use('/api/:unmatchedRoute', (req, res) => {
-  res.status(404).json({
-    error: 'API endpoint not found',
-    path: req.originalUrl,
-    attemptedRoute: req.params.unmatchedRoute
-  });
-});
+
+
+
+
+
 
 app.use((error, req, res, next) => {
   console.error('Server Error:', error);

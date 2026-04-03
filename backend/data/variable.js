@@ -1,5 +1,5 @@
-// const url_prefix = 'http://localhost:6003';
-const url_prefix = 'https://v-web-frontend-s8pe.vercel.app';
+const url_prefix = 'https://medicwaycare-gggd.onrender.com';
+// const url_prefix = 'https://bc860d0bc571.ngrok-free.app';
 
 
-module.exports = url_prefix;
+export default url_prefix

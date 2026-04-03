@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 6003;
 // CORS setup
 app.use(cors({
   origin: [
-    "http://localhost:3000",
+    "https://medicwaycare-gggd.onrender.com",
         "http://localhost:5173",
     "http://localhost:5174",
 
@@ -281,6 +281,27 @@ if (NODE_ENV !== 'production') {
   const startServer = async () => {
     try {
       await connectDB();
+
+      const Content = require('./models/Content.cjs');
+      try {
+        const indexes = await Content.collection.indexes();
+        if (indexes.some((index) => index.name === 'page_1')) {
+          await Content.collection.dropIndex('page_1');
+          console.log('Dropped legacy Content page index');
+        }
+      } catch (indexErr) {
+        if (indexErr.codeName !== 'IndexNotFound' && indexErr.message.indexOf('ns not found') === -1) {
+          console.warn('Content index cleanup failed:', indexErr.message);
+        }
+      }
+
+      try {
+        await Content.syncIndexes();
+        console.log('Content indexes synchronized');
+      } catch (syncErr) {
+        console.warn('Content syncIndexes failed:', syncErr.message);
+      }
+
       app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
       });
